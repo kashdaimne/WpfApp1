@@ -1,0 +1,299 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище practicModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="punkt">
+          <Key>
+            <PropertyRef Name="IDПункт выдачи" />
+          </Key>
+          <Property Name="IDПункт выдачи" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Адрес" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <!--Ошибки, обнаруженные при создании:
+предупреждение 6002: В таблице или представлении "practic.dbo.tovar" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
+        <EntityType Name="tovar">
+          <Key>
+            <PropertyRef Name="Артикул" />
+            <PropertyRef Name="Наименование" />
+            <PropertyRef Name="Еденица измерения" />
+            <PropertyRef Name="Стоимость" />
+            <PropertyRef Name="Размер макс. скидки" />
+            <PropertyRef Name="Производитель" />
+            <PropertyRef Name="Поставщик" />
+            <PropertyRef Name="Категория товара" />
+            <PropertyRef Name="Действующая скидка" />
+            <PropertyRef Name="Кол-во на складе" />
+            <PropertyRef Name="Описание" />
+          </Key>
+          <Property Name="Артикул" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Наименование" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Еденица измерения" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Стоимость" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Размер макс. скидки" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Производитель" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Поставщик" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Категория товара" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Действующая скидка" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Кол-во на складе" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Описание" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <!--Ошибки, обнаруженные при создании:
+предупреждение 6002: В таблице или представлении "practic.dbo.users" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
+        <EntityType Name="users">
+          <Key>
+            <PropertyRef Name="Роль сотрудника" />
+            <PropertyRef Name="ФИО" />
+            <PropertyRef Name="Логин" />
+            <PropertyRef Name="Пароль" />
+          </Key>
+          <Property Name="Роль сотрудника" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ФИО" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Логин" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Пароль" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <!--Ошибки, обнаруженные при создании:
+предупреждение 6002: В таблице или представлении "practic.dbo.zakaz" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
+        <EntityType Name="zakaz">
+          <Key>
+            <PropertyRef Name="Состав заказа" />
+            <PropertyRef Name="Дата заказа" />
+            <PropertyRef Name="Дата доставки" />
+            <PropertyRef Name="Пункт выдачи" />
+            <PropertyRef Name="ФИО клиента" />
+            <PropertyRef Name="Код для получения" />
+            <PropertyRef Name="Статус заказа" />
+          </Key>
+          <Property Name="Состав заказа" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Дата заказа" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Дата доставки" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Пункт выдачи" Type="int" Nullable="false" />
+          <Property Name="ФИО клиента" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Код для получения" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Статус заказа" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_zakaz_punkt">
+          <End Role="punkt" Type="Self.punkt" Multiplicity="1" />
+          <End Role="zakaz" Type="Self.zakaz" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="punkt">
+              <PropertyRef Name="IDПункт выдачи" />
+            </Principal>
+            <Dependent Role="zakaz">
+              <PropertyRef Name="Пункт выдачи" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище practicModelContainer">
+          <EntitySet Name="punkt" EntityType="Self.punkt" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tovar" EntityType="Self.tovar" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [tovar].[Артикул] AS [Артикул], 
+    [tovar].[Наименование] AS [Наименование], 
+    [tovar].[Еденица измерения] AS [Еденица измерения], 
+    [tovar].[Стоимость] AS [Стоимость], 
+    [tovar].[Размер макс. скидки] AS [Размер макс. скидки], 
+    [tovar].[Производитель] AS [Производитель], 
+    [tovar].[Поставщик] AS [Поставщик], 
+    [tovar].[Категория товара] AS [Категория товара], 
+    [tovar].[Действующая скидка] AS [Действующая скидка], 
+    [tovar].[Кол-во на складе] AS [Кол-во на складе], 
+    [tovar].[Описание] AS [Описание]
+    FROM [dbo].[tovar] AS [tovar]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="users" EntityType="Self.users" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [users].[Роль сотрудника] AS [Роль сотрудника], 
+    [users].[ФИО] AS [ФИО], 
+    [users].[Логин] AS [Логин], 
+    [users].[Пароль] AS [Пароль]
+    FROM [dbo].[users] AS [users]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="zakaz" EntityType="Self.zakaz" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [zakaz].[Состав заказа] AS [Состав заказа], 
+    [zakaz].[Дата заказа] AS [Дата заказа], 
+    [zakaz].[Дата доставки] AS [Дата доставки], 
+    [zakaz].[Пункт выдачи] AS [Пункт выдачи], 
+    [zakaz].[ФИО клиента] AS [ФИО клиента], 
+    [zakaz].[Код для получения] AS [Код для получения], 
+    [zakaz].[Статус заказа] AS [Статус заказа]
+    FROM [dbo].[zakaz] AS [zakaz]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_zakaz_punkt" Association="Self.FK_zakaz_punkt">
+            <End Role="punkt" EntitySet="punkt" />
+            <End Role="zakaz" EntitySet="zakaz" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="practicModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="punkt">
+          <Key>
+            <PropertyRef Name="IDПункт_выдачи" />
+          </Key>
+          <Property Name="IDПункт_выдачи" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Адрес" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="zakaz" Relationship="Self.FK_zakaz_punkt" FromRole="punkt" ToRole="zakaz" />
+        </EntityType>
+        <EntityType Name="tovar">
+          <Key>
+            <PropertyRef Name="Артикул" />
+            <PropertyRef Name="Наименование" />
+            <PropertyRef Name="Еденица_измерения" />
+            <PropertyRef Name="Стоимость" />
+            <PropertyRef Name="Размер_макс__скидки" />
+            <PropertyRef Name="Производитель" />
+            <PropertyRef Name="Поставщик" />
+            <PropertyRef Name="Категория_товара" />
+            <PropertyRef Name="Действующая_скидка" />
+            <PropertyRef Name="Кол_во_на_складе" />
+            <PropertyRef Name="Описание" />
+          </Key>
+          <Property Name="Артикул" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Наименование" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Еденица_измерения" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Стоимость" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Размер_макс__скидки" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Производитель" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Поставщик" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Категория_товара" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Действующая_скидка" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Кол_во_на_складе" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Описание" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="users">
+          <Key>
+            <PropertyRef Name="Роль_сотрудника" />
+            <PropertyRef Name="ФИО" />
+            <PropertyRef Name="Логин" />
+            <PropertyRef Name="Пароль" />
+          </Key>
+          <Property Name="Роль_сотрудника" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ФИО" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Логин" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Пароль" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="zakaz">
+          <Key>
+            <PropertyRef Name="Состав_заказа" />
+            <PropertyRef Name="Дата_заказа" />
+            <PropertyRef Name="Дата_доставки" />
+            <PropertyRef Name="Пункт_выдачи" />
+            <PropertyRef Name="ФИО_клиента" />
+            <PropertyRef Name="Код_для_получения" />
+            <PropertyRef Name="Статус_заказа" />
+          </Key>
+          <Property Name="Состав_заказа" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Дата_заказа" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Дата_доставки" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Пункт_выдачи" Type="Int32" Nullable="false" />
+          <Property Name="ФИО_клиента" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Код_для_получения" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Статус_заказа" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="punkt" Relationship="Self.FK_zakaz_punkt" FromRole="zakaz" ToRole="punkt" />
+        </EntityType>
+        <Association Name="FK_zakaz_punkt">
+          <End Role="punkt" Type="Self.punkt" Multiplicity="1" />
+          <End Role="zakaz" Type="Self.zakaz" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="punkt">
+              <PropertyRef Name="IDПункт_выдачи" />
+            </Principal>
+            <Dependent Role="zakaz">
+              <PropertyRef Name="Пункт_выдачи" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="practicEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="punkt" EntityType="Self.punkt" />
+          <EntitySet Name="tovar" EntityType="Self.tovar" />
+          <EntitySet Name="users" EntityType="Self.users" />
+          <EntitySet Name="zakaz" EntityType="Self.zakaz" />
+          <AssociationSet Name="FK_zakaz_punkt" Association="Self.FK_zakaz_punkt">
+            <End Role="punkt" EntitySet="punkt" />
+            <End Role="zakaz" EntitySet="zakaz" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище practicModelContainer" CdmEntityContainer="practicEntities">
+          <EntitySetMapping Name="punkt">
+            <EntityTypeMapping TypeName="practicModel.punkt">
+              <MappingFragment StoreEntitySet="punkt">
+                <ScalarProperty Name="IDПункт_выдачи" ColumnName="IDПункт выдачи" />
+                <ScalarProperty Name="Адрес" ColumnName="Адрес" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tovar">
+            <EntityTypeMapping TypeName="practicModel.tovar">
+              <MappingFragment StoreEntitySet="tovar">
+                <ScalarProperty Name="Артикул" ColumnName="Артикул" />
+                <ScalarProperty Name="Наименование" ColumnName="Наименование" />
+                <ScalarProperty Name="Еденица_измерения" ColumnName="Еденица измерения" />
+                <ScalarProperty Name="Стоимость" ColumnName="Стоимость" />
+                <ScalarProperty Name="Размер_макс__скидки" ColumnName="Размер макс. скидки" />
+                <ScalarProperty Name="Производитель" ColumnName="Производитель" />
+                <ScalarProperty Name="Поставщик" ColumnName="Поставщик" />
+                <ScalarProperty Name="Категория_товара" ColumnName="Категория товара" />
+                <ScalarProperty Name="Действующая_скидка" ColumnName="Действующая скидка" />
+                <ScalarProperty Name="Кол_во_на_складе" ColumnName="Кол-во на складе" />
+                <ScalarProperty Name="Описание" ColumnName="Описание" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="users">
+            <EntityTypeMapping TypeName="practicModel.users">
+              <MappingFragment StoreEntitySet="users">
+                <ScalarProperty Name="Роль_сотрудника" ColumnName="Роль сотрудника" />
+                <ScalarProperty Name="ФИО" ColumnName="ФИО" />
+                <ScalarProperty Name="Логин" ColumnName="Логин" />
+                <ScalarProperty Name="Пароль" ColumnName="Пароль" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="zakaz">
+            <EntityTypeMapping TypeName="practicModel.zakaz">
+              <MappingFragment StoreEntitySet="zakaz">
+                <ScalarProperty Name="Состав_заказа" ColumnName="Состав заказа" />
+                <ScalarProperty Name="Дата_заказа" ColumnName="Дата заказа" />
+                <ScalarProperty Name="Дата_доставки" ColumnName="Дата доставки" />
+                <ScalarProperty Name="Пункт_выдачи" ColumnName="Пункт выдачи" />
+                <ScalarProperty Name="ФИО_клиента" ColumnName="ФИО клиента" />
+                <ScalarProperty Name="Код_для_получения" ColumnName="Код для получения" />
+                <ScalarProperty Name="Статус_заказа" ColumnName="Статус заказа" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

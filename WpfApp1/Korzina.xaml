@@ -1,0 +1,21 @@
+﻿<Window x:Class="WpfApp1.Korzina"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfApp1"
+        mc:Ignorable="d"
+        Title="Korzina" Height="500" Width="808">
+    <Grid>
+        <Rectangle HorizontalAlignment="Left" Height="58" Stroke="Black" VerticalAlignment="Top" Width="772" Grid.RowSpan="1" Margin="10,19,0,0" StrokeThickness="0" RadiusX="10" RadiusY="10">
+            <Rectangle.Fill>
+                <ImageBrush ImageSource="кор фон1.png"/>
+            </Rectangle.Fill>
+        </Rectangle>
+        <Label Content="В ВАШЕЙ КОРЗИНЕ ПУСТО" HorizontalAlignment="Left" Margin="293,199,0,0" VerticalAlignment="Top" FontWeight="Bold" FontSize="16"/>
+        <Label Content="Начните путь к спорту прямо сейчас. " HorizontalAlignment="Left" Margin="254,230,0,0" VerticalAlignment="Top" FontSize="16" FontWeight="Bold"/>
+        <Label Content="Перейдите в каталог и добавьте товар в корзину." HorizontalAlignment="Left" Margin="208,261,0,0" VerticalAlignment="Top" FontSize="16" FontWeight="Bold"/>
+        <Button Content="Каталог" HorizontalAlignment="Left" Margin="359,310,0,0" VerticalAlignment="Top" Width="103" Click="Button_Click" Height="31"/>
+
+    </Grid>
+</Window>
